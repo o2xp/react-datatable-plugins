@@ -96,6 +96,13 @@ import Datatable from "@o2xp/react-datatable";
     "birthdate": "2015-09-05T06:50:42 -00:00"
   }]
 
+const Test = () => {
+  const {state : {data}} = useO2xpProvider()
+
+  console.log(data)
+  return null
+}
+
 const DefaultStory = () => {
 
   const [rowsData, setRowsData] = React.useState(data)
@@ -108,6 +115,7 @@ const handleOnChange = ({rowsData: newRowsdata}) => {
     <>
     
     <O2xpProvider rowsData={rowsData} setRowsData={handleOnChange}> 
+    <Test />  
     <Datatable rowsData={rowsData} 
           columnsData={columns} />
       <Search />
