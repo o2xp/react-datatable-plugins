@@ -1,12 +1,14 @@
 import React from "react";
+import Search from "../../src/Search";
+import { O2xpProvider, useO2xpProvider } from "../../src/O2xpContext/O2xpContext";
 import Datatable from "@o2xp/react-datatable";
 import Search from "../../src/Search";
 import { O2xpProvider, useO2xpProvider } from "../../src/O2xpContext/O2xpContext";
 
-const columns = {
+const cols = {
   columns: {
     id: {
-      id: "id", // required
+      id: "id", //required
       label: "Id",
       colSize: 150 // required
     },
@@ -41,8 +43,9 @@ const columns = {
       colSize: 250
     }
   },
-  columnsOrder: ["index", "id", "name", "age", "birthdate", "eyecolor", "iban"], // required
-  itemsHeight: 36, // required
+
+  columnsOrder: ["index", "id", "name", "age", "birthdate", "eyecolor", "iban"], //required
+  itemsHeight: 36, //required
   borderedColumns: false,
   borderedRows: false
 };
@@ -93,13 +96,24 @@ const data = [
 const DefaultStory = () => {
   const [rowsData, setRowsData] = React.useState(data);
 
-  const handleOnChange = ({ rowsData: newRowsdata }) => {
+  const [columns, setColumns] = React.useState(cols);
+
+  const handleOnRowsDataChange = ({ rowsData: newRowsdata }) => {
     setRowsData(newRowsdata);
+  };
+
+  const handleOnColumnsChange = ({ columns: newColumns }) => {
+    setColumns(newColumns);
   };
 
   return (
     <>
-      <O2xpProvider rowsData={rowsData} setRowsData={handleOnChange}>
+      <O2xpProvider
+        rowsData={rowsData}
+        setRowsData={handleOnRowsDataChange}
+        columns={columns}
+        setColumns={handleOnColumnsChange}
+      >
         <Datatable rowsData={rowsData} columnsData={columns} />
         <Search />
       </O2xpProvider>

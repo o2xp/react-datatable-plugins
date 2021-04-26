@@ -6,7 +6,12 @@ const defaultState = {
   data: {
     rowsData: [],
     baseRowsData: [],
-    setRowsData: []
+    setRowsData: null
+  },
+  columns: {
+    data: null,
+    baseData: null,
+    setColumns: null
   }
 };
 
@@ -19,6 +24,19 @@ const initData = ({ state, payload }) => {
       rowsData,
       setRowsData,
       baseRowsData: rowsData
+    }
+  };
+};
+
+const initColumns = ({ state, payload }) => {
+  const { columns, setColumns } = payload;
+  return {
+    ...state,
+    columns: {
+      ...state.columns,
+      data: columns,
+      baseData: columns,
+      setColumns
     }
   };
 };
@@ -44,13 +62,16 @@ const o2xpReducer = (state, action) => {
     case "INIT_DATA": {
       return initData({ state, payload });
     }
+    case "INIT_COLUMNS": {
+      return initColumns({ state, payload });
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
   }
 };
 
-const O2xpProvider = ({ rowsData, setRowsData, children }) => {
+const O2xpProvider = ({ rowsData, setRowsData, columns, setColumns, children }) => {
   const [state, dispatch] = useReducer(o2xpReducer, defaultState);
 
   useEffect(() => {
@@ -60,7 +81,16 @@ const O2xpProvider = ({ rowsData, setRowsData, children }) => {
         payload: { rowsData, setRowsData }
       });
     }
-  }, [rowsData]);
+  }, [rowsData, setRowsData]);
+
+  useEffect(() => {
+    if (state.columns.data == null) {
+      dispatch({
+        type: "INIT_COLUMNS",
+        payload: { columns, setColumns }
+      });
+    }
+  }, [columns, setColumns]);
 
   const value = { state, dispatch, setRowsData };
   return <O2xpContext.Provider value={value}>{children}</O2xpContext.Provider>;
