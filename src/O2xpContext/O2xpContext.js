@@ -54,7 +54,7 @@ const O2xpProvider = ({ rowsData, setRowsData, children }) => {
   const [state, dispatch] = useReducer(o2xpReducer, defaultState);
 
   useEffect(() => {
-    if (state.data.rowsData.length === 0) {
+    if (state.data.baseRowsData.length === 0) {
       dispatch({
         type: "INIT_DATA",
         payload: { rowsData, setRowsData }
