@@ -1,5 +1,7 @@
 import React from "react";
 import Search from "../../src/Search";
+import Print from "../../src/Print";
+import DisplayColumns from "../../src/DisplayColumns";
 import { O2xpProvider, useO2xpProvider } from "../../src/O2xpContext/O2xpContext";
 import Datatable from "@o2xp/react-datatable";
 
@@ -13,6 +15,11 @@ const cols = {
     index: {
       id: "index",
       label: "Index",
+      colSize: 100
+    },
+    adult: {
+      id: "adult",
+      label: "Adult",
       colSize: 100
     },
     name: {
@@ -41,7 +48,7 @@ const cols = {
       colSize: 250
     }
   },
-  columnsOrder: ["index", "id", "name", "age", "birthdate", "eyecolor", "iban"], //required
+  columnsOrder: ["index", "id", "age", "name", "birthdate", "eyecolor", "iban"], //required
   itemsHeight: 36, //required
   borderedColumns: false,
   borderedRows: false
@@ -98,10 +105,9 @@ const DefaultStory = () => {
     setRowsData(newRowsdata);
   };
 
-  const handleOnColumnsChange = ({ columns: newColumns }) => {
+  const handleOnColumnsChange = ({ data: newColumns }) => {
     setColumns(newColumns);
   };
-
   return (
     <>
       <O2xpProvider
@@ -112,6 +118,8 @@ const DefaultStory = () => {
       >
         <Datatable rowsData={rowsData} columnsData={columns} />
         <Search />
+        <Print />
+        <DisplayColumns />
       </O2xpProvider>
     </>
   );

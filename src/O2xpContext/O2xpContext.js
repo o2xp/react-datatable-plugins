@@ -9,7 +9,7 @@ const defaultState = {
     setRowsData: null
   },
   columns: {
-    data: null,
+    data: { columns: null, columnsOder: [] },
     baseData: null,
     setColumns: null
   }
@@ -28,6 +28,17 @@ const initData = ({ state, payload }) => {
   };
 };
 
+const setData = ({ state, payload }) => {
+  state.data.setRowsData(payload);
+  return {
+    ...state,
+    data: {
+      ...state.data,
+      ...payload
+    }
+  };
+};
+
 const initColumns = ({ state, payload }) => {
   const { columns, setColumns } = payload;
   return {
@@ -41,12 +52,12 @@ const initColumns = ({ state, payload }) => {
   };
 };
 
-const setData = ({ state, payload }) => {
-  state.data.setRowsData(payload);
+const setColumns = ({ state, payload }) => {
+  state.columns.setColumns(payload);
   return {
     ...state,
-    data: {
-      ...state.data,
+    columns: {
+      ...state.columns,
       ...payload
     }
   };
@@ -62,9 +73,13 @@ const o2xpReducer = (state, action) => {
     case "INIT_DATA": {
       return initData({ state, payload });
     }
+    case "SET_COLUMNS": {
+      return setColumns({ state, payload });
+    }
     case "INIT_COLUMNS": {
       return initColumns({ state, payload });
     }
+
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -75,7 +90,7 @@ const O2xpProvider = ({ rowsData, setRowsData, columns, setColumns, children }) 
   const [state, dispatch] = useReducer(o2xpReducer, defaultState);
 
   useEffect(() => {
-    if (state.data.rowsData.length === 0) {
+    if (state.data.baseRowsData.length === 0) {
       dispatch({
         type: "INIT_DATA",
         payload: { rowsData, setRowsData }
@@ -84,7 +99,7 @@ const O2xpProvider = ({ rowsData, setRowsData, columns, setColumns, children }) 
   }, [rowsData, setRowsData]);
 
   useEffect(() => {
-    if (state.columns.data == null) {
+    if (state.columns.data.columns == null) {
       dispatch({
         type: "INIT_COLUMNS",
         payload: { columns, setColumns }
