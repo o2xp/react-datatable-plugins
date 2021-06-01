@@ -1,0 +1,45 @@
+#wrap{
+    display: inline-flex;
+    float: right;
+}
+
+.open{
+    width: 400px;
+    transition: width 0.4s linear;
+
+}
+
+.close{
+    transition: width 0.4s linear;
+    width: 0px;
+}
+
+.autoComplete{
+    text-align: right;
+    position: relative;
+}
+
+.mode{
+    transition:  0.4s;
+    float: right;
+}
+
+.mode>svg{
+    width: 1.4rem;
+    height: 1.4rem;
+}
+
+.showModeChoice{
+    opacity: 1;
+    transition: opacity 0.4s linear;
+}
+
+.hiddenModeChoice{
+    opacity: 0;
+    transition: opacity 0.4s linear;
+    visibility: hidden;
+}
+
+.search-icon{
+    margin-bottom: 5rem!important;
+}

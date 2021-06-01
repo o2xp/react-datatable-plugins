@@ -11,7 +11,7 @@ import HelpIcon from "@material-ui/icons/Help";
 import Tooltip from "@material-ui/core/Tooltip";
 import TextField from "@material-ui/core/TextField";
 import { useO2xpProvider } from "../O2xpContext/O2xpContext";
-import "../Style/Style.css";
+import "../style.css";
 import { simpleSearch, transformString, managePrioritiesQueries } from "./searchTools";
 import type { Columns } from "./Types/Columns";
 import Datatable from "@o2xp/react-datatable";
@@ -57,7 +57,7 @@ const Search = () => {
       const tranformedValue: string = transformString(value);
       const reg: RegExp = /([A-Za-z0-9]+(!==|!=|<=|>=|=|<|>)[A-Za-z0-9]+(?:&&|\|\|)?)$/;
 
-      if (!reg.test(tranformedValue)) {
+      if (!reg.test(tranformedValue) && value !== "") {
         newHasError = true;
       } else {
         newRowsData = managePrioritiesQueries({
@@ -139,8 +139,8 @@ const Search = () => {
           </Tooltip>
         </div>
       </div>
-      <IconButton onClick={handleClick} color={colorChange}>
-        <SearchIcon className="search-icon" />
+      <IconButton className="search-icon" onClick={handleClick} color={colorChange}>
+        <SearchIcon />
       </IconButton>
     </div>
   );
