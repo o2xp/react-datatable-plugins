@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import DialogActions from "@material-ui/core/DialogActions";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import "../Style/Style.css";
+import "../style.css";
 import { useO2xpProvider } from "../O2xpContext/O2xpContext";
 
 const Print = () => {
@@ -82,7 +82,6 @@ const Print = () => {
   };
 
   const printingData = ({ rows, colVal }) => {
-    const i = 0;
     if (columns.data !== null) {
       const head = `<thead>${Object.values(columns.data.columns).map(
         col => `<th>${col.label}</th>`
@@ -105,6 +104,7 @@ const Print = () => {
       </IconButton>
 
       <Dialog
+        className="dialog"
         maxWidth="xl"
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
