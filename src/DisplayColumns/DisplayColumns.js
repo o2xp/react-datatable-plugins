@@ -8,7 +8,7 @@ import ViewWeekIcon from "@material-ui/icons/ViewWeek";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "./MenuItem";
 import Button from "@material-ui/core/Button";
-import "../Style/Style.css";
+import "../style.css";
 import { FormControlLabel } from "@material-ui/core";
 
 const DisplayColumns = () => {
