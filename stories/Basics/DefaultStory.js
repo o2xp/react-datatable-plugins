@@ -1,7 +1,4 @@
 import React from "react";
-import Search from "../../src/Search";
-import Print from "../../src/Print";
-import DisplayColumns from "../../src/DisplayColumns";
 import { O2xpProvider, useO2xpProvider } from "../../src/O2xpContext/O2xpContext";
 import Datatable from "@o2xp/react-datatable";
 
@@ -117,9 +114,6 @@ const DefaultStory = () => {
         setColumns={handleOnColumnsChange}
       >
         <Datatable rowsData={rowsData} columnsData={columns} />
-        <Search />
-        <Print />
-        <DisplayColumns />
       </O2xpProvider>
     </>
   );
