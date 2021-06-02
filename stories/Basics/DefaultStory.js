@@ -4,7 +4,6 @@ import Search from "../../src/Search";
 import Print from "../../src/Print";
 import DisplayColumns from "../../src/DisplayColumns";
 import { O2xpProvider } from "../../src/O2xpContext/O2xpContext";
-
 import { columnsData, rows } from "../../static/data";
 
 const DefaultStory = () => {

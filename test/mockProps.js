@@ -1,6 +1,6 @@
 import { columnsData, rows } from "../static/data";
 
-const createStore = ({
+const createProps = ({
   rowsData = rows,
   setRowsData,
   columns = columnsData,
@@ -12,4 +12,4 @@ const createStore = ({
   setColumns
 });
 
-export default createStore;
+export default createProps;
