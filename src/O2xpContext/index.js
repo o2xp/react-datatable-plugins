@@ -1,4 +1,4 @@
 // @flow
-import {CountProvider, useCount} from "./O2xpContext";
+import { O2xpProvider, useO2xpProvider } from "./O2xpContext";
 
-export {CountProvider, useCount};
+export { O2xpProvider, useO2xpProvider };
