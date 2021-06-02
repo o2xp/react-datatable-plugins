@@ -46,7 +46,6 @@ const Search = () => {
     const { baseRowsData }: { rowsData: Object[], baseRowsData: Object[] } = data;
     const clBaseRowsData: Object[] = cloneDeep(baseRowsData);
     const columnsInArray: {} = columns.data.columns;
-    console.log(columnsInArray);
     let newRowsData: Object[] = clBaseRowsData;
     let newHasError: boolean = false;
 
