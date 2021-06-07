@@ -114,7 +114,7 @@ const Print = () => {
           Print
         </DialogTitle>
         <DialogContent dividers>
-          <Typography className="columnsToPrint" gutterBottom>
+          <Typography className="o2xp-to-print-columns" gutterBottom>
             Choose what you want to print
           </Typography>
           <Typography gutterBottom>
