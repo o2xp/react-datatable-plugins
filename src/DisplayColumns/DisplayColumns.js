@@ -61,6 +61,7 @@ const DisplayColumns = () => {
   return (
     <div>
       <IconButton
+        id="test"
         onClick={handleClick}
         aria-controls="customized-menu"
         aria-haspopup="true"
@@ -84,6 +85,7 @@ const DisplayColumns = () => {
           />
         ))}
       </Menu>
+      <div id="close-test" onClick={handleClose}></div>
     </div>
   );
 };
