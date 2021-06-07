@@ -1,32 +1,32 @@
-#wrap{
+#o2xp-search-wrap{
     display: inline-flex;
     float: right;
 }
 
-.open{
+.o2xp-open-state{
     width: 400px;
     transition: width 0.4s ease-in;
 
 }
 
-.close{
+.o2xp-close-state{
     transition: width 0.4s ease-out 0.2s;
     width: 0px;
 }
 
-.autoComplete{
+.o2xp-autocomplete{
     text-align: right;
     position: relative;
 }
 
-.mode{
+.o2xp-search-mode{
     transition:  0.4s;
     float: right;
     display: inline-flex;
     align-self: center;
 }
 
-.mode>svg{
+.o2xp-search-mode>svg{
     height: .9em;
     width: .9em;
     top: .35em;
@@ -34,17 +34,17 @@
     position: relative;
 }
 
-.showModeChoice{
+.o2xp-search-mode-show{
     opacity: 1;
     transition: opacity 0.4s ease-in 0.2s;
 }
 
-.hiddenModeChoice{
+.o2xp-search-mode-hidden{
     opacity: 0;
     transition: opacity 0.4s ease-out;
     visibility: hidden;
 }
 
-.search-icon{
+.o2xp-search-icon{
     margin-bottom: 5rem!important;
 }

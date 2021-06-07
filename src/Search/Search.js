@@ -98,7 +98,7 @@ const Search = () => {
         value={filterBy}
         type="text"
         placeholder={placeholderQueryMode}
-        className={openChangeClassName("open", "close")}
+        className={openChangeClassName("o2xp-open-state", "o2xp-close-state")}
         error={hasError}
         helperText={
           hasError &&
@@ -110,13 +110,13 @@ const Search = () => {
   };
 
   return (
-    <div id="wrap">
+    <div id="o2xp-search-wrap">
       <div>
-        <div className="autoComplete">
+        <div className="o2xp-autocomplete">
           {columns.data && queryMode ? (
             <Autocomplete
               id="search"
-              className={openChangeClassName("open", "close")}
+              className={openChangeClassName("o2xp-open-state", "o2xp-close-state")}
               freeSolo
               options={Object.values(columns.data.columns).map(option => option.id)}
               renderInput={params => createTextField(params)}
@@ -125,20 +125,26 @@ const Search = () => {
             createTextField()
           )}
         </div>
-        <div className="mode">
+        <div className="o2xp-search-mode">
           <FormControlLabel
-            className={openChangeClassName("showModeChoice", "hiddenModeChoice")}
+            className={openChangeClassName(
+              "o2xp-search-mode-show",
+              "o2xp-search-mode-hidden"
+            )}
             control={<Switch color={colorChange} onClick={handleClickQueryMode} />}
             label="Query mode"
           />
           <Tooltip title={<a href="">What's query mode ?</a>} interactive arrow>
             <HelpIcon
-              className={openChangeClassName("showModeChoice", "hiddenModeChoice")}
+              className={openChangeClassName(
+                "o2xp-search-mode-show",
+                "o2xp-search-mode-hidden"
+              )}
             />
           </Tooltip>
         </div>
       </div>
-      <IconButton className="search-icon" onClick={handleClick} color={colorChange}>
+      <IconButton className="o2xp-search-icon" onClick={handleClick} color={colorChange}>
         <SearchIcon />
       </IconButton>
     </div>
