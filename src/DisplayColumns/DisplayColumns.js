@@ -1,5 +1,7 @@
+// @flow
+
 import React, { useState, useEffect } from "react";
-import { useO2xpProvider } from "../O2xpContext/O2xpContext";
+import useO2xpProvider from "../hooks/useO2xpProvider";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import NativeSelect from "@material-ui/core/NativeSelect";
@@ -60,16 +62,11 @@ const DisplayColumns = () => {
 
   return (
     <div>
-      <IconButton
-        id="test"
-        onClick={handleClick}
-        aria-controls="customized-menu"
-        aria-haspopup="true"
-      >
+      <IconButton onClick={handleClick}>
         <ViewWeekIcon />
       </IconButton>
       <Menu
-        id="customized-menu"
+        id="o2xp-customized-menu"
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
@@ -78,6 +75,7 @@ const DisplayColumns = () => {
       >
         {allColumns.map(column => (
           <MenuItem
+            className={`o2xp-menu-item-${column.id}`}
             key={column.id}
             column={column}
             columnsOrder={columns.data.columnsOrder}
@@ -85,7 +83,6 @@ const DisplayColumns = () => {
           />
         ))}
       </Menu>
-      <div id="close-test" onClick={handleClose}></div>
     </div>
   );
 };
