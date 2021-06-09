@@ -1,7 +1,6 @@
 // @flow
 import uniq from "lodash/uniq";
 import flatten from "lodash/flatten";
-import type { Columns } from "./Types/Columns";
 import type { QueryType } from "./Types/QueryType";
 
 // function which normalize input values
@@ -55,7 +54,7 @@ export const filterByColNameAndOp = ({
 
 // Research function when you're not in query mode
 type SimpleSearch = {
-  columns: Columns,
+  columns: Object[],
   value: string,
   rows: Object[]
 };
@@ -121,7 +120,6 @@ export const querySearchInter = ({ queriesArray, rows }: QueryType): Object[] =>
           })
         );
         if (resultsArray.length === 0) {
-          
         }
       }
     });
