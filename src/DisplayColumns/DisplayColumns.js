@@ -15,7 +15,7 @@ import { FormControlLabel } from "@material-ui/core";
 
 const DisplayColumns = () => {
   const {
-    state: { data, columns = { data: { columns: {} } } },
+    state: { data, columns },
     dispatch
   } = useO2xpProvider();
 
