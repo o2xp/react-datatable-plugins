@@ -10,7 +10,7 @@ import Switch from "@material-ui/core/Switch";
 import HelpIcon from "@material-ui/icons/Help";
 import Tooltip from "@material-ui/core/Tooltip";
 import TextField from "@material-ui/core/TextField";
-import { useO2xpProvider } from "../O2xpContext/O2xpContext";
+import useO2xpProvider from "../hooks/useO2xpProvider";
 import "../style.css";
 import { simpleSearch, transformString, managePrioritiesQueries } from "./searchTools";
 import type { Columns } from "./Types/Columns";
@@ -40,8 +40,8 @@ const Search = () => {
     setColorChange(newColorChange);
   }, [filterBy]);
 
-  const handleChange = (e: SyntheticEvent<HTMLInputElement>) => {
-    const { value }: { value: string } = e.currentTarget;
+  const handleChange = (e: SyntheticInputEvent<*>) => {
+    const { value } = e.target;
     const { baseRowsData }: { rowsData: Object[], baseRowsData: Object[] } = data;
     const clBaseRowsData: Object[] = cloneDeep(baseRowsData);
     const columnsInArray: Object = columns.data.columns;
@@ -51,7 +51,6 @@ const Search = () => {
     if (!queryMode) {
       const cols = Object.values(columnsInArray);
       newRowsData = simpleSearch({ columns: cols, value, rows: baseRowsData });
-      console.log(newRowsData);
     } else if (queryMode) {
       const tranformedValue: string = transformString(value);
       const reg: RegExp = /([A-Za-z0-9]+(!==|!=|<=|>=|=|<|>)[A-Za-z0-9]+(?:&&|\|\|)?)$/;
