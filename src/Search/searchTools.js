@@ -61,9 +61,9 @@ type SimpleSearch = {
 
 export const simpleSearch = ({ columns, value, rows }: SimpleSearch): Object[] => {
   const resRows: Object[] = [];
-  rows.forEach(row => {
+  rows.forEach((row: Object) => {
     columns.some(
-      ({ id }) =>
+      ({ id }: { id: string }) =>
         filterByColNameAndOp({
           comparedValue: row[id].toString(),
           operator: "=",
@@ -75,7 +75,13 @@ export const simpleSearch = ({ columns, value, rows }: SimpleSearch): Object[] =
 };
 
 // Manage priorities in query mode
-export const managePrioritiesQueries = ({ queriesArray, rows }: QueryType): Object[] => {
+export const managePrioritiesQueries = ({
+  queriesArray,
+  rows
+}: {
+  queriesArray: string,
+  rows: Object[]
+}): Object[] => {
   const resRows: Object[] = [];
   const unionSplitted: string[] = queriesArray.split(/\|\||OR/);
   unionSplitted.forEach(interQuery => {
@@ -88,7 +94,8 @@ export const managePrioritiesQueries = ({ queriesArray, rows }: QueryType): Obje
 // Research query mode with union
 export const querySearchUnion = ({ queriesArray, rows }: QueryType): Object[] => {
   const resultsArray: Object[] = [];
-  queriesArray.forEach(query => {
+  console.log({ queriesArray, rows });
+  queriesArray.forEach((query: string) => {
     const querySplitted: string[] = query.split(/\s*(!=|<=|>=|=|<|>)\s*/);
     if (querySplitted[2]) {
       rows.filter(row => {
@@ -109,7 +116,7 @@ export const querySearchUnion = ({ queriesArray, rows }: QueryType): Object[] =>
 export const querySearchInter = ({ queriesArray, rows }: QueryType): Object[] => {
   let resultsArray: Object[] = [...rows];
   if (queriesArray) {
-    queriesArray.forEach(query => {
+    queriesArray.forEach((query: string) => {
       const querySplitted: string[] = query.split(/\s*(!==|!=|<=|>=|=|<|>)\s*/);
       if (querySplitted[2]) {
         resultsArray = resultsArray.filter(row =>

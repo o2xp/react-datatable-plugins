@@ -14,11 +14,10 @@ import { useO2xpProvider } from "../O2xpContext/O2xpContext";
 import "../style.css";
 import { simpleSearch, transformString, managePrioritiesQueries } from "./searchTools";
 import type { Columns } from "./Types/Columns";
-import Datatable from "@o2xp/react-datatable";
 
 const Search = () => {
   const {
-    state: { data, columns = { data: { columns: {} } } },
+    state: { data, columns },
     dispatch
   } = useO2xpProvider();
 
@@ -41,17 +40,18 @@ const Search = () => {
     setColorChange(newColorChange);
   }, [filterBy]);
 
-  const handleChange = e => {
-    const { value }: { value: string } = e.target;
+  const handleChange = (e: SyntheticEvent<HTMLInputElement>) => {
+    const { value }: { value: string } = e.currentTarget;
     const { baseRowsData }: { rowsData: Object[], baseRowsData: Object[] } = data;
     const clBaseRowsData: Object[] = cloneDeep(baseRowsData);
-    const columnsInArray: {} = columns.data.columns;
+    const columnsInArray: Object = columns.data.columns;
     let newRowsData: Object[] = clBaseRowsData;
     let newHasError: boolean = false;
 
     if (!queryMode) {
       const cols = Object.values(columnsInArray);
       newRowsData = simpleSearch({ columns: cols, value, rows: baseRowsData });
+      console.log(newRowsData);
     } else if (queryMode) {
       const tranformedValue: string = transformString(value);
       const reg: RegExp = /([A-Za-z0-9]+(!==|!=|<=|>=|=|<|>)[A-Za-z0-9]+(?:&&|\|\|)?)$/;
@@ -92,7 +92,7 @@ const Search = () => {
     return (
       <TextField
         {...params}
-        id="search"
+        id="o2xp-search-bar"
         color={colorChange}
         onChange={handleChange}
         value={filterBy}
@@ -112,13 +112,15 @@ const Search = () => {
   return (
     <div id="o2xp-search-wrap">
       <div>
-        <div className="o2xp-autocomplete">
+        <div className="o2xp-wrapper-input">
           {columns.data && queryMode ? (
             <Autocomplete
-              id="search"
+              id="o2xp-autocomplete"
               className={openChangeClassName("o2xp-open-state", "o2xp-close-state")}
               freeSolo
-              options={Object.values(columns.data.columns).map(option => option.id)}
+              options={Object.values(columns.data.columns).map(
+                (option: Object) => (option.id: string)
+              )}
               renderInput={params => createTextField(params)}
             />
           ) : (
@@ -131,7 +133,13 @@ const Search = () => {
               "o2xp-search-mode-show",
               "o2xp-search-mode-hidden"
             )}
-            control={<Switch color={colorChange} onClick={handleClickQueryMode} />}
+            control={
+              <Switch
+                className="o2xp-query-selector"
+                color={colorChange}
+                onClick={handleClickQueryMode}
+              />
+            }
             label="Query mode"
           />
           <Tooltip title={<a href="">What's query mode ?</a>} interactive arrow>

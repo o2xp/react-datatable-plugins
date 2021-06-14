@@ -1,5 +1,5 @@
 // @flow
 export type QueryType = {
-  queriesArray: string,
+  queriesArray: string[],
   rows: Object[]
 };
