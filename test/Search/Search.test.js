@@ -1,13 +1,12 @@
 import "jsdom-global/register";
 import React from "react";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { mount } from "enzyme";
 import { act } from "react-dom/test-utils";
 import Search from "../../src/Search";
 import { O2xpProvider } from "../../src/O2xpContext";
 import createProps from "../mockProps";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import mockStore from "../../static/mockStore";
-import TextField from "@material-ui/core/TextField";
 
 const dispatchMock = jest.fn();
 const setRowsDataMock = jest.fn();

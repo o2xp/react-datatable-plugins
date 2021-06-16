@@ -34,9 +34,10 @@ export const filterByColNameAndOp = ({
       if (formattedOp === "==" || formattedOp === "!=") {
         return eval(`${comparedValue.toString()} ${formattedOp} ${searchedValue}`);
       }
+      break;
     case "number":
       return eval(
-        `${comparedValue} ${formattedOp} ${parseInt(searchedValue.replace(/ /g, ""))}`
+        `${comparedValue} ${formattedOp} ${parseInt(searchedValue.replace(/ /g, ""), 10)}`
       );
     case "string":
       if (formattedOp === "==" || formattedOp === "!=") {
@@ -50,6 +51,7 @@ export const filterByColNameAndOp = ({
     default:
       return res;
   }
+  return false;
 };
 
 // Research function when you're not in query mode
@@ -74,6 +76,30 @@ export const simpleSearch = ({ columns, value, rows }: SimpleSearch): Object[] =
   return resRows;
 };
 
+// Research query mode with inter
+export const querySearchInter = ({ queriesArray, rows }: QueryType): Object[] => {
+  let resultsArray: Object[] = [...rows];
+  if (queriesArray) {
+    queriesArray.forEach((query: string) => {
+      const querySplitted: string[] = query.split(/\s*(!==|!=|<=|>=|=|<|>)\s*/);
+      if (querySplitted[2]) {
+        resultsArray = resultsArray.filter((row: Object) =>
+          filterByColNameAndOp({
+            comparedValue: row[querySplitted[0].trim()],
+            operator: querySplitted[1],
+            searchedValue: querySplitted[2]
+          })
+        );
+        if (resultsArray.length === 0) {
+          return null;
+        }
+      }
+      return resultsArray;
+    });
+  }
+  return resultsArray;
+};
+
 // Manage priorities in query mode
 export const managePrioritiesQueries = ({
   queriesArray,
@@ -89,47 +115,4 @@ export const managePrioritiesQueries = ({
     resRows.push(querySearchInter({ queriesArray: interSplitted, rows }));
   });
   return uniq(flatten(resRows));
-};
-
-// Research query mode with union
-export const querySearchUnion = ({ queriesArray, rows }: QueryType): Object[] => {
-  const resultsArray: Object[] = [];
-  console.log({ queriesArray, rows });
-  queriesArray.forEach((query: string) => {
-    const querySplitted: string[] = query.split(/\s*(!=|<=|>=|=|<|>)\s*/);
-    if (querySplitted[2]) {
-      rows.filter(row => {
-        {
-          filterByColNameAndOp({
-            comparedValue: row[querySplitted[0].trim()],
-            operator: querySplitted[1],
-            searchedValue: querySplitted[2]
-          }) && resultsArray.push(row);
-        }
-      });
-    }
-  });
-  return uniq(resultsArray);
-};
-
-// Research query mode with inter
-export const querySearchInter = ({ queriesArray, rows }: QueryType): Object[] => {
-  let resultsArray: Object[] = [...rows];
-  if (queriesArray) {
-    queriesArray.forEach((query: string) => {
-      const querySplitted: string[] = query.split(/\s*(!==|!=|<=|>=|=|<|>)\s*/);
-      if (querySplitted[2]) {
-        resultsArray = resultsArray.filter(row =>
-          filterByColNameAndOp({
-            comparedValue: row[querySplitted[0].trim()],
-            operator: querySplitted[1],
-            searchedValue: querySplitted[2]
-          })
-        );
-        if (resultsArray.length === 0) {
-        }
-      }
-    });
-  }
-  return resultsArray;
 };

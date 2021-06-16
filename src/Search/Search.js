@@ -13,7 +13,6 @@ import TextField from "@material-ui/core/TextField";
 import useO2xpProvider from "../hooks/useO2xpProvider";
 import "../style.css";
 import { simpleSearch, transformString, managePrioritiesQueries } from "./searchTools";
-import type { Columns } from "./Types/Columns";
 
 const Search = () => {
   const {
@@ -141,7 +140,7 @@ const Search = () => {
             }
             label="Query mode"
           />
-          <Tooltip title={<a href="">What's query mode ?</a>} interactive arrow>
+          <Tooltip title={<a href="./">What`s query mode ?</a>} interactive arrow>
             <HelpIcon
               className={openChangeClassName(
                 "o2xp-search-mode-show",
