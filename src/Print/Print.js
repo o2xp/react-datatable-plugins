@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import IconButton from "@material-ui/core/IconButton";
 import PrintIcon from "@material-ui/icons/Print";
-import Datatable from "@o2xp/react-datatable";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -11,7 +10,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import "../style.css";
-import { useO2xpProvider } from "../O2xpContext/O2xpContext";
+import useO2xpProvider from "../O2xpContext/O2xpContext";
 
 const Print = () => {
   const {
@@ -22,8 +21,8 @@ const Print = () => {
   const [showDialog, setShowDialog] = useState(false);
   const [isChecked, setIsChecked] = useState(true);
   const [enable, setEnable] = useState(false);
-  const [checkedRowsArray, setCheckedRowsArray] = useState([]);
-  const [tempo, setTempo] = useState([]);
+  const [divRowArray, setDivRowArray] = useState([]);
+  const [checkedRowArray, setCheckedRowArray] = useState([]);
 
   const handleOpen = () => {
     setShowDialog(true);
@@ -31,20 +30,18 @@ const Print = () => {
 
     elements.forEach(element => {
       const checkbox = element.getElementsByTagName("INPUT")[0];
-      const temp = [];
-      const tempo = [];
+      const divArray = [];
       setEnable(false);
-      let truc;
 
       if (checkbox.checked) {
         setEnable(true);
-        temp.push(element);
+        divArray.push(element);
         element.getElementsByClassName("cell").forEach(el => {
-          tempo.push(el.innerText);
+          checkedRowArray.push(el.innerText);
         });
       }
-      setTempo(tempo);
-      setCheckedRowsArray(temp);
+      setCheckedRowArray(checkedRowArray);
+      setDivRowArray(divArray);
     });
   };
 
@@ -53,7 +50,7 @@ const Print = () => {
   };
 
   const handleChange = () => {
-    setChecked(!checked);
+    setIsChecked(!isChecked);
   };
 
   const manageWindow = ({ head, body }) => {
@@ -74,14 +71,7 @@ const Print = () => {
     newWindow.close();
   };
 
-  const managePrintingDataChecked = () => {
-    printingData({ rows: checkedRowsArray });
-  };
-  const managePrintingData = () => {
-    printingData({ rows: data.rowsData });
-  };
-
-  const printingData = ({ rows, colVal }) => {
+  const printingData = ({ rows }) => {
     if (columns.data !== null) {
       const head = `<thead>${Object.values(columns.data.columns).map(
         col => `<th>${col.label}</th>`
@@ -95,6 +85,12 @@ const Print = () => {
       )}`;
       manageWindow({ head, body });
     }
+  };
+  const managePrintingDataChecked = () => {
+    printingData({ rows: divRowArray });
+  };
+  const managePrintingData = () => {
+    printingData({ rows: data.rowsData });
   };
 
   return (
