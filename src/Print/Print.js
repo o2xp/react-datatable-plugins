@@ -9,12 +9,12 @@ import Typography from "@material-ui/core/Typography";
 import DialogActions from "@material-ui/core/DialogActions";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import useO2xpProvider from "../hooks/useO2xpProvider";
 import "../style.css";
-import useO2xpProvider from "../O2xpContext/O2xpContext";
 
 const Print = () => {
   const {
-    state: { data, columns = { data: { columns: {} } } },
+    state: { data, columns },
     dispatch
   } = useO2xpProvider();
 
