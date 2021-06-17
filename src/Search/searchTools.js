@@ -6,6 +6,7 @@ import type { QueryType } from "./Types/QueryType";
 // function which normalize input values
 export const transformString = (str: string): string => {
   return str
+    .toString()
     .toLowerCase()
     .replace(/ /g, "")
     .normalize("NFD")
@@ -14,7 +15,7 @@ export const transformString = (str: string): string => {
 
 // function which compares data table value with searched value in terms of type and operator
 type FilterByColNameAndOp = {
-  comparedValue: string | number,
+  comparedValue: string | number | boolean,
   operator: string,
   searchedValue: string
 };
@@ -26,32 +27,33 @@ export const filterByColNameAndOp = ({
 }: FilterByColNameAndOp): boolean => {
   let res: boolean = false;
   let formattedOp: string = operator;
+  const reg: RegExp = /\s*(!=|==)\s*/;
+
   if (formattedOp === "=") {
     formattedOp = "==";
   }
   switch (typeof comparedValue) {
-    case "boolean":
-      if (formattedOp === "==" || formattedOp === "!=") {
-        return eval(`${comparedValue.toString()} ${formattedOp} ${searchedValue}`);
-      }
-      break;
-    case "number":
-      return eval(
-        `${comparedValue} ${formattedOp} ${parseInt(searchedValue.replace(/ /g, ""), 10)}`
-      );
     case "string":
-      if (formattedOp === "==" || formattedOp === "!=") {
-        // const res = transformString(comparedValue) === transformString(searchedValue);
+      if (reg.test(formattedOp)) {
         res = transformString(comparedValue).includes(transformString(searchedValue));
       }
       if (formattedOp === "!=") {
         return !res;
       }
       return res;
+    case "boolean":
+      if (reg.test(formattedOp)) {
+        return eval(`${comparedValue.toString()} ${formattedOp} ${searchedValue}`);
+      }
+      return false;
+    case "number":
+      return eval(
+        `${comparedValue} ${formattedOp} ${parseInt(searchedValue.replace(/ /g, ""), 10)}`
+      );
+
     default:
       return res;
   }
-  return false;
 };
 
 // Research function when you're not in query mode
@@ -66,11 +68,7 @@ export const simpleSearch = ({ columns, value, rows }: SimpleSearch): Object[] =
   rows.forEach((row: Object) => {
     columns.some(
       ({ id }: { id: string }) =>
-        filterByColNameAndOp({
-          comparedValue: row[id].toString(),
-          operator: "=",
-          searchedValue: value.toString()
-        }) && resRows.push(row)
+        transformString(row[id]).includes(transformString(value)) && resRows.push(row)
     );
   });
   return resRows;
@@ -102,14 +100,14 @@ export const querySearchInter = ({ queriesArray, rows }: QueryType): Object[] =>
 
 // Manage priorities in query mode
 export const managePrioritiesQueries = ({
-  queriesArray,
+  queryString,
   rows
 }: {
-  queriesArray: string,
+  queryString: string,
   rows: Object[]
 }): Object[] => {
   const resRows: Object[] = [];
-  const unionSplitted: string[] = queriesArray.split(/\|\||OR/);
+  const unionSplitted: string[] = queryString.split(/\|\||OR/);
   unionSplitted.forEach(interQuery => {
     const interSplitted: string[] = interQuery.split(/&&|AND/);
     resRows.push(querySearchInter({ queriesArray: interSplitted, rows }));
