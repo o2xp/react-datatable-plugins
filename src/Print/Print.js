@@ -1,3 +1,5 @@
+// @flow
+
 import React, { useState } from "react";
 import IconButton from "@material-ui/core/IconButton";
 import PrintIcon from "@material-ui/icons/Print";
@@ -14,8 +16,8 @@ import "../style.css";
 
 const Print = () => {
   const {
-    state: { data, columns },
-    dispatch
+    state: { data, columns }
+    // dispatch
   } = useO2xpProvider();
 
   const [showDialog, setShowDialog] = useState(false);
@@ -27,34 +29,32 @@ const Print = () => {
   const handleOpen = () => {
     setShowDialog(true);
     const elements = document.getElementsByClassName("row");
-
-    elements.forEach(element => {
-      const checkbox = element.getElementsByTagName("INPUT")[0];
-      const divArray = [];
-      setEnable(false);
-
-      if (checkbox.checked) {
-        setEnable(true);
-        divArray.push(element);
-        element.getElementsByClassName("cell").forEach(el => {
-          checkedRowArray.push(el.innerText);
-        });
-      }
-      setCheckedRowArray(checkedRowArray);
-      setDivRowArray(divArray);
-    });
+    // elements.forEach(element => {
+    //   const checkbox = element.getElementsByTagName("INPUT")[0];
+    //   const divArray = [];
+    //   setEnable(false);
+    //   if (checkbox.checked) {
+    //     setEnable(true);
+    //     divArray.push(element);
+    //     element.getElementsByClassName("cell").forEach(el => {
+    //       checkedRowArray.push(el.innerText);
+    //     });
+    //   }
+    //   setCheckedRowArray(checkedRowArray);
+    //   setDivRowArray(divArray);
+    // });
   };
 
   const handleClose = () => {
     setShowDialog(false);
   };
 
-  const handleChange = () => {
+  const handleChangeChecked = () => {
     setIsChecked(!isChecked);
   };
 
   const manageWindow = ({ head, body }) => {
-    const newWindow = window.open();
+    const newWindow: Object = window.open();
     newWindow.document.write(
       `<html>
         <body>
@@ -71,16 +71,16 @@ const Print = () => {
     newWindow.close();
   };
 
-  const printingData = ({ rows }) => {
-    if (columns.data !== null) {
-      const head = `<thead>${Object.values(columns.data.columns).map(
-        col => `<th>${col.label}</th>`
+  const printingData = ({ rows }: { rows: Object[] }) => {
+    if ((columns.data: Object) !== null) {
+      const head: string = `<thead>${Object.values(columns.data.columns).map(
+        (col: string) => `<th>${col.label}</th>`
       )}</thead>`;
 
-      const body = `<tbody>${rows.map(
-        row =>
+      const body: string = `<tbody>${rows.map(
+        (row: Object) =>
           `<tr>${Object.values(columns.data.columns).map(
-            col => `<td>${row[col.id]}</td>`
+            (col: string) => `<td>${row[col.id]}</td>`
           )}`
       )}`;
       manageWindow({ head, body });
@@ -117,8 +117,9 @@ const Print = () => {
             <FormControlLabel
               control={
                 <Checkbox
+                  className="o2xp-checkbox"
                   checked={isChecked}
-                  onChange={handleChange}
+                  onChange={handleChangeChecked}
                   name="onlyColumnsDisplay"
                   color="secondary"
                 />
@@ -138,6 +139,7 @@ const Print = () => {
             Selected rows
           </Button>
           <Button
+            id="o2xp-all-rows-button"
             onClick={managePrintingData}
             variant="contained"
             color="primary"
