@@ -4,7 +4,7 @@ import flatten from "lodash/flatten";
 import type { QueryType } from "./Types/QueryType";
 
 // function which normalize input values
-export const transformString = (str: string): string => {
+export const transformString = (str: string | boolean | number): string => {
   return str
     .toString()
     .toLowerCase()
@@ -43,16 +43,58 @@ export const filterByColNameAndOp = ({
       return res;
     case "boolean":
       if (reg.test(formattedOp)) {
-        return eval(`${comparedValue.toString()} ${formattedOp} ${searchedValue}`);
+        res = transformString(comparedValue).includes(transformString(searchedValue));
       }
-      return false;
+      if (formattedOp === "!=") {
+        return !res;
+      }
+      return res;
     case "number":
-      return eval(
-        `${comparedValue} ${formattedOp} ${parseInt(searchedValue.replace(/ /g, ""), 10)}`
-      );
+      return evaluateQuery({
+        comparedValue,
+        operator,
+        searchedValue: parseInt(searchedValue)
+      });
 
     default:
       return res;
+  }
+};
+
+export const evaluateQuery = ({ comparedValue, operator, searchedValue }) => {
+  switch (operator) {
+    case "=":
+      if (comparedValue === searchedValue) {
+        return true;
+      }
+      return false;
+    case "!=":
+      if (comparedValue !== searchedValue) {
+        return true;
+      }
+      return false;
+    case "<":
+      if (comparedValue < searchedValue) {
+        return true;
+      }
+      return false;
+    case "<=":
+      if (comparedValue <= searchedValue) {
+        return true;
+      }
+      return false;
+    case ">":
+      if (comparedValue > searchedValue) {
+        return true;
+      }
+      return false;
+    case ">=":
+      if (comparedValue >= searchedValue) {
+        return true;
+      }
+      return false;
+    default:
+      return false;
   }
 };
 
@@ -112,5 +154,6 @@ export const managePrioritiesQueries = ({
     const interSplitted: string[] = interQuery.split(/&&|AND/);
     resRows.push(querySearchInter({ queriesArray: interSplitted, rows }));
   });
+  console.log(uniq(flatten(resRows)));
   return uniq(flatten(resRows));
 };
