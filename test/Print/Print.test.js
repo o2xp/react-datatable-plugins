@@ -8,25 +8,33 @@ import Print from "../../src/Print";
 import { O2xpProvider } from "../../src/O2xpContext";
 import createProps from "../mockProps";
 
-const setRowsDataMock = jest.fn();
-const setColumnsMock = jest.fn();
-const props = createProps({ setRowsDataMock, setColumnsMock });
-window.open = jest.fn();
-jest.useFakeTimers();
+const setRowsData = jest.fn();
+const setColumns = jest.fn();
+const props = createProps({ setRowsData, setColumns });
 
 describe("Print", () => {
   let wrapper;
 
   beforeEach(() => {
+    const div = document.createElement("div");
+    window.domNode = div;
+    document.body.appendChild(div);
+
     wrapper = mount(
       <O2xpProvider {...props}>
         <Print />
-      </O2xpProvider>
+      </O2xpProvider>,
+      { attachTo: window.domNode }
     );
   });
 
-  afterAll(() => {
+  afterEach(() => {
+    wrapper.detach();
     wrapper = null;
+  });
+
+  afterAll(() => {
+    window.open.mockClear();
   });
 
   it("should mount", () => {
@@ -34,10 +42,13 @@ describe("Print", () => {
   });
 
   it("should handle open", () => {
-    wrapper
-      .find(IconButton)
-      .at(0)
-      .simulate("click");
+    act(() => {
+      wrapper
+        .find(IconButton)
+        .at(0)
+        .simulate("click");
+    });
+    wrapper.update();
 
     expect(wrapper.find(Dialog).props().open).toBeTruthy();
   });
@@ -100,19 +111,22 @@ describe("Print", () => {
 
     expect(wrapper.find(Dialog).props().open).toBeTruthy();
 
+    window.open = jest.fn();
+    window.open.mockReturnValue({
+      document: {
+        close: jest.fn(),
+        write: jest.fn()
+      },
+      focus: jest.fn(),
+      close: jest.fn(),
+      print: jest.fn()
+    });
+
     wrapper
       .find("#o2xp-all-rows-button")
       .at(0)
       .simulate("click");
 
-    const closeSpy = jest.fn();
-    window.open = jest.fn().mockReturnValue({ close: closeSpy });
-    window.close = jest.fn();
-
     expect(window.open).toBeCalled();
-
-    jest.runAllTimer();
-
-    expect(closeSpy).toBeCalled();
   });
 });

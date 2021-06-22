@@ -17,32 +17,14 @@ import "../style.css";
 const Print = () => {
   const {
     state: { data, columns }
-    // dispatch
   } = useO2xpProvider();
 
   const [showDialog, setShowDialog] = useState(false);
   const [isChecked, setIsChecked] = useState(true);
-  const [enable, setEnable] = useState(false);
   const [divRowArray, setDivRowArray] = useState([]);
-  const [checkedRowArray, setCheckedRowArray] = useState([]);
 
   const handleOpen = () => {
     setShowDialog(true);
-    const elements = document.getElementsByClassName("row");
-    // elements.forEach(element => {
-    //   const checkbox = element.getElementsByTagName("INPUT")[0];
-    //   const divArray = [];
-    //   setEnable(false);
-    //   if (checkbox.checked) {
-    //     setEnable(true);
-    //     divArray.push(element);
-    //     element.getElementsByClassName("cell").forEach(el => {
-    //       checkedRowArray.push(el.innerText);
-    //     });
-    //   }
-    //   setCheckedRowArray(checkedRowArray);
-    //   setDivRowArray(divArray);
-    // });
   };
 
   const handleClose = () => {
@@ -99,13 +81,7 @@ const Print = () => {
         <PrintIcon />
       </IconButton>
 
-      <Dialog
-        className="dialog"
-        maxWidth="xl"
-        onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={showDialog}
-      >
+      <Dialog className="dialog" maxWidth="xl" onClose={handleClose} open={showDialog}>
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
           Print
         </DialogTitle>
@@ -130,6 +106,7 @@ const Print = () => {
         </DialogContent>
         <DialogActions className="controlButtons">
           <Button
+            id="o2xp-checked-rows-button"
             onClick={managePrintingDataChecked}
             variant="contained"
             color="primary"
