@@ -1,7 +1,7 @@
 // @flow
 import uniq from "lodash/uniq";
 import flatten from "lodash/flatten";
-import type { QueryType } from "./Types/QueryType";
+import type { QueryType } from "../Types/QueryType";
 
 // function which normalize input values
 export const transformString = (str: string | boolean | number): string => {
@@ -18,6 +18,51 @@ type FilterByColNameAndOp = {
   comparedValue: string | number | boolean,
   operator: string,
   searchedValue: string
+};
+
+export const evaluateQuery = ({
+  comparedValue,
+  operator,
+  searchedValue
+}: {
+  comparedValue: number,
+  operator: string,
+  searchedValue: number
+}) => {
+  switch (operator) {
+    case "=":
+      if (comparedValue === searchedValue) {
+        return true;
+      }
+      return false;
+    case "!=":
+      if (comparedValue !== searchedValue) {
+        return true;
+      }
+      return false;
+    case "<":
+      if (comparedValue < searchedValue) {
+        return true;
+      }
+      return false;
+    case "<=":
+      if (comparedValue <= searchedValue) {
+        return true;
+      }
+      return false;
+    case ">":
+      if (comparedValue > searchedValue) {
+        return true;
+      }
+      return false;
+    case ">=":
+      if (comparedValue >= searchedValue) {
+        return true;
+      }
+      return false;
+    default:
+      return false;
+  }
 };
 
 export const filterByColNameAndOp = ({
@@ -53,48 +98,11 @@ export const filterByColNameAndOp = ({
       return evaluateQuery({
         comparedValue,
         operator,
-        searchedValue: parseInt(searchedValue)
+        searchedValue: parseInt(searchedValue, 10)
       });
 
     default:
       return res;
-  }
-};
-
-export const evaluateQuery = ({ comparedValue, operator, searchedValue }) => {
-  switch (operator) {
-    case "=":
-      if (comparedValue === searchedValue) {
-        return true;
-      }
-      return false;
-    case "!=":
-      if (comparedValue !== searchedValue) {
-        return true;
-      }
-      return false;
-    case "<":
-      if (comparedValue < searchedValue) {
-        return true;
-      }
-      return false;
-    case "<=":
-      if (comparedValue <= searchedValue) {
-        return true;
-      }
-      return false;
-    case ">":
-      if (comparedValue > searchedValue) {
-        return true;
-      }
-      return false;
-    case ">=":
-      if (comparedValue >= searchedValue) {
-        return true;
-      }
-      return false;
-    default:
-      return false;
   }
 };
 
@@ -154,6 +162,5 @@ export const managePrioritiesQueries = ({
     const interSplitted: string[] = interQuery.split(/&&|AND/);
     resRows.push(querySearchInter({ queriesArray: interSplitted, rows }));
   });
-  console.log(uniq(flatten(resRows)));
   return uniq(flatten(resRows));
 };

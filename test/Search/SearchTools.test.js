@@ -5,9 +5,9 @@ import {
   evaluateQuery,
   transformString,
   managePrioritiesQueries
-} from "../../src/Search/searchTools";
+} from "../../src/Search/SearchSystem/searchTools";
 
-describe("Search", () => {
+describe("SearchSystem", () => {
   describe("managePrioritiesQueries should", () => {
     it("return corresponding row", () => {
       expect(
@@ -216,7 +216,7 @@ describe("Search", () => {
     describe("with <=", () => {
       it("return true", () => {
         expect(
-          evaluateQuery({ comparedValue: 1, operator: "<=", searchedValue: 14 | 1 })
+          evaluateQuery({ comparedValue: 1, operator: "<=", searchedValue: 14 || 1 })
         ).toBeTruthy();
       });
       it("return false", () => {
@@ -247,7 +247,7 @@ describe("Search", () => {
       });
       it("return false", () => {
         expect(
-          evaluateQuery({ comparedValue: 1, operator: ">=", searchedValue: 4 | 1 })
+          evaluateQuery({ comparedValue: 1, operator: ">=", searchedValue: 4 || 1 })
         ).toBeFalsy();
       });
     });

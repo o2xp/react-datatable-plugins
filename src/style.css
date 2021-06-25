@@ -1,6 +1,10 @@
-#o2xp-search-wrap{
+.o2xp-search-wrapper{
     display: inline-flex;
     float: right;
+}
+
+.o2xp-search-bar-switch{
+    display: initial;
 }
 
 .o2xp-open-state{
@@ -10,8 +14,8 @@
 }
 
 .o2xp-close-state{
-    transition: width 0.4s ease-out 0.2s;
     width: 0px;
+    transition: width 0.4s ease-out 0.2s;
 }
 
 .o2xp-wrapper-input{
@@ -46,5 +50,6 @@
 }
 
 .o2xp-search-icon{
+    float: right;
     margin-bottom: 5rem!important;
 }
