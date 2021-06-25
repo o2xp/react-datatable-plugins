@@ -11,7 +11,7 @@ const MenuItem = ({
 }: {
   column: Object,
   columnsOrder: string[],
-  handleClick: jenesaispas
+  handleClick: string => void
 }) => {
   const displayed = columnsOrder.includes((column.id: string));
   return (

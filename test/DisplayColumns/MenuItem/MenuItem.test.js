@@ -1,7 +1,7 @@
 import "jsdom-global/register";
 import React from "react";
 import { mount } from "enzyme";
-import MenuItem from "../../../src/DisplayColumns/MenuItem";
+import MenuItem from "../../../src/DisplayColumns/Displaying/MenuItem";
 import { columnsData } from "../../../static/data";
 import Checkbox from "@material-ui/core/Checkbox";
 import MenuItemMUI from "@material-ui/core/MenuItem";
