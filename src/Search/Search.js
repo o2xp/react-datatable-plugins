@@ -1,29 +1,23 @@
 // @flow
-import React, {useState} from "react";
-import { useO2xpProvider } from "../O2xpContext/O2xpContext";
+import React, { useState } from "react";
+import Input from "./Input";
+import Button from "./Button";
+import "../style.css";
 
 const Search = () => {
-  const {
-    state: { data },
-    dispatch
-  } = useO2xpProvider();
+  const [open, setOpen] = useState(true);
+  const [color, setColor] = useState("primary");
 
-  const [filterBy, setFilterBy] = useState("");
-
-  const handleChange = e => {
-    const { value } = e.target;
-    const { baseRowsData } = data;
-    const newRowsData = baseRowsData.filter(el => el.name.startsWith(value));
-
-    const action = {
-      type: "SET_DATA",
-      payload: { rowsData: newRowsData }
-    };
-    dispatch(action);
-    setFilterBy(value);
+  const handleClickOpen = () => {
+    setOpen(!open);
   };
 
-  return <input onChange={handleChange} value={filterBy} />;
+  return (
+    <div className="o2xp-search-wrapper">
+      <Input open={open} color={color} setColor={setColor} />
+      <Button click={handleClickOpen} color={color} />
+    </div>
+  );
 };
 
 export default Search;
