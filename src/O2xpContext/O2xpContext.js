@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useContext, createContext } from "react";
+import React, { useEffect, useReducer, createContext } from "react";
 
 const O2xpContext = createContext();
 
@@ -111,12 +111,4 @@ const O2xpProvider = ({ rowsData, setRowsData, columns, setColumns, children }) 
   return <O2xpContext.Provider value={value}>{children}</O2xpContext.Provider>;
 };
 
-const useO2xpProvider = () => {
-  const context = useContext(O2xpContext);
-  if (context === undefined) {
-    throw new Error("use O2xpProvider must be used within a O2xpProvider");
-  }
-  return context;
-};
-
-export { O2xpProvider, useO2xpProvider };
+export { O2xpProvider, O2xpContext };

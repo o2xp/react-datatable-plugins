@@ -1,0 +1,43 @@
+name: Build
+on:  
+  push:
+    branches:
+      - main
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 12
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@o2xp'
+
+      - name: Install
+        run: npm i -g codecov && npm i
+
+      - name: Type checking
+        run: npm run flow
+
+      - name: Linter
+        run: npm run lint
+
+      - name: Testing
+        run: npm run test
+
+      - name: Coverage
+        run: codecov
+
+      - name: Building storybook
+        run: npm run build-storybook
+
+      - name: Deploying to github page
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages 
+          folder: storybook-static
+          
