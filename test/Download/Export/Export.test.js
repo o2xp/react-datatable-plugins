@@ -13,6 +13,7 @@ import createProps from "../../mockProps";
 const setRowsDataMock = jest.fn();
 const setColumnsMock = jest.fn();
 const setShowDialogMock = jest.fn();
+const setAttributeMock = jest.fn();
 const props = createProps({ setRowsDataMock, setColumnsMock });
 
 describe("Export", () => {
@@ -86,30 +87,26 @@ describe("Export", () => {
   });
 
   it("should handleClick", () => {
+    wrapper.find("a").simulate("click", { target: { setAttribute: setAttributeMock } });
+
     act(() => {
       wrapper
-        .find(TextField)
-        .first()
+        .find(RadioGroup)
         .props()
-        .onChange({ target: { value: "testFileName" } });
+        .onChange({ target: { value: "json" } });
     });
     wrapper.update();
 
     expect(
       wrapper
-        .find(TextField)
-        .first()
-        .props().value
-    ).toEqual("testFileName");
-
-    act(() => {
-      wrapper
-        .find("a")
+        .find(FormControlLabel)
+        .at(1)
+        .find("input")
         .props()
-        .onClick();
-    });
-    wrapper.update();
+    ).toBeTruthy();
 
-    console.log(wrapper.find("a").props());
+    wrapper.find("a").simulate("click", { target: { setAttribute: setAttributeMock } });
+
+    expect(setAttributeMock).toHaveBeenCalledTimes(4);
   });
 });

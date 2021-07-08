@@ -39,15 +39,21 @@ const Export = ({ showDialog, setShowDialog }: Props): Object => {
     setFileName(value);
   };
 
+  const addAttributeToTarget = ({ target, attribute, attrValue }) => {
+    target.setAttribute(attribute, attrValue);
+  };
+
   const handleClick = (e: SyntheticInputEvent<*>) => {
-    console.log(e.target);
-    const stringifiedData: string = JSON.stringify((data.rowsData: Object[]));
+    const stringifiedData: string = JSON.stringify(data.rowsData);
+    let link = `data:text/json;charset=utf-8,${encodeURIComponent(stringifiedData)}`;
+
     if (fileType === "json") {
-      e.target.setAttribute(
-        "href",
-        `data:text/json;charset=utf-8,${encodeURIComponent(stringifiedData)}`
-      );
-      e.target.setAttribute("download", `${fileName}.json`);
+      addAttributeToTarget({ target: e.target, attribute: "href", attrValue: link });
+      addAttributeToTarget({
+        target: e.target,
+        attribute: "download",
+        attrValue: `${fileName}.json`
+      });
     } else {
       const parsedData: Object = JSON.parse(stringifiedData);
       const identifier = (key, value: string) => (value === null ? "" : value);
@@ -58,12 +64,13 @@ const Export = ({ showDialog, setShowDialog }: Props): Object => {
           header.map(cell => JSON.stringify(row[cell], identifier)).join(",")
         )
       ].join("\r\n");
-
-      e.target.setAttribute(
-        "href",
-        `data:text/json;charset=utf-8,${encodeURIComponent(csv)}`
-      );
-      e.target.setAttribute("download", `${fileName}.csv`);
+      link = `data:text/json;charset=utf-8,${encodeURIComponent(csv)}`;
+      addAttributeToTarget({ target: e.target, attribute: "href", attrValue: link });
+      addAttributeToTarget({
+        target: e.target,
+        attribute: "download",
+        attrValue: `${fileName}.csv`
+      });
     }
   };
 
