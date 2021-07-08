@@ -51,7 +51,7 @@ export const rows = [
   {
     id: "5f96a92dee57be1eafd26821",
     index: 0,
-    adult: true,
+    adult: false,
     age: 1,
     eyecolor: "brown",
     name: "Osborne Johns",
