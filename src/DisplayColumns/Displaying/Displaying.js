@@ -1,13 +1,12 @@
 // @flow
-
 import React, { useState, useEffect } from "react";
 import Menu from "@material-ui/core/Menu";
 import useO2xpProvider from "../../hooks/useO2xpProvider";
 import MenuItem from "./MenuItem";
 
 type Props = {
-  anchor: Object,
-  setAnchor: Object => void
+  anchor: HTMLElement | null,
+  setAnchor: (HTMLElement | null) => void
 };
 
 const Displaying = ({ anchor, setAnchor }: Props) => {
@@ -19,8 +18,8 @@ const Displaying = ({ anchor, setAnchor }: Props) => {
   const [allColumns, setAllColumns] = useState([]);
 
   useEffect(() => {
-    if ((columns.data.columns: Object)) {
-      const newAllColumns: Object[] = Object.keys((columns.data.columns: Object)).map(
+    if (columns.data.columns) {
+      const newAllColumns: Object[] = Object.keys(columns.data.columns).map(
         key => columns.data.columns[key]
       );
       setAllColumns(newAllColumns);
@@ -34,8 +33,8 @@ const Displaying = ({ anchor, setAnchor }: Props) => {
   const setColumnVisibility = (column: string) => {
     const index = allColumns.indexOf(column);
     let newColumnsOrder: string[] = columns.data.columnsOrder;
-    if (columns.data.columnsOrder.includes(column)) {
-      newColumnsOrder = columns.data.columnsOrder.filter((col: string) => col !== column);
+    if (newColumnsOrder.includes(column)) {
+      newColumnsOrder = newColumnsOrder.filter((col: string) => col !== column);
     } else {
       newColumnsOrder.splice(index, 0, column);
     }
