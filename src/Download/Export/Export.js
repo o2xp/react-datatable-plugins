@@ -64,7 +64,9 @@ const Export = ({ showDialog, setShowDialog }: Props): Object => {
           header.map(cell => JSON.stringify(row[cell], identifier)).join(",")
         )
       ].join("\r\n");
+
       link = `data:text/json;charset=utf-8,${encodeURIComponent(csv)}`;
+
       addAttributeToTarget({ target: e.target, attribute: "href", attrValue: link });
       addAttributeToTarget({
         target: e.target,
