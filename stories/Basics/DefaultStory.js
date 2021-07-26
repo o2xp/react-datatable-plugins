@@ -1,6 +1,6 @@
 import React from "react";
 import Datatable from "@o2xp/react-datatable";
-import Search from "../../src/Search";
+import Pagination from "../../src/Pagination";
 import { O2xpProvider } from "../../src/O2xpContext/O2xpContext";
 import { columnsData, rows } from "../../static/data";
 
@@ -24,7 +24,7 @@ const DefaultStory = () => {
         setColumns={handleOnColumnsChange}
       >
         <Datatable rowsData={rowsData} columnsData={columns} />
-        <Search />
+        <Pagination />
       </O2xpProvider>
     </>
   );

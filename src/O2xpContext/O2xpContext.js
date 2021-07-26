@@ -29,7 +29,9 @@ const initData = ({ state, payload }) => {
 };
 
 const setData = ({ state, payload }) => {
-  state.data.setRowsData(payload);
+  if (state.data.setRowsData) {
+    state.data.setRowsData(payload);
+  }
   return {
     ...state,
     data: {
