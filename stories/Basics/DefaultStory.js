@@ -1,10 +1,11 @@
+// @flow
 import React from "react";
 import Datatable from "@o2xp/react-datatable";
 import Download from "../../src/Download";
 import { O2xpProvider } from "../../src/O2xpContext/O2xpContext";
 import { columnsData, rows } from "../../static/data";
 
-const DefaultStory = () => {
+const DefaultStory = (): React$Element<*> => {
   const [rowsData, setRowsData] = React.useState(rows);
   const [columns, setColumns] = React.useState(columnsData);
 
