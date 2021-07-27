@@ -2,7 +2,6 @@
 import React from "react";
 import Datatable from "@o2xp/react-datatable";
 import Pagination from "../../src/Pagination";
-import Search from "../../src/Search";
 import Print from "../../src/Print";
 import DisplayColumns from "../../src/DisplayColumns";
 import { O2xpProvider } from "../../src/O2xpContext/O2xpContext";
@@ -29,7 +28,6 @@ const DefaultStory = (): React$Element<*> => {
       >
         <Datatable rowsData={rowsData} columnsData={columns} />
         <Pagination />
-        <Search />
         <Print />
         <DisplayColumns />
       </O2xpProvider>
