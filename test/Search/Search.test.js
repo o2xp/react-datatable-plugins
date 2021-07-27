@@ -3,7 +3,7 @@ import React from "react";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { mount } from "enzyme";
 import { act } from "react-dom/test-utils";
-import SearchSystem from "../../src/Search/SearchSystem";
+import Search from "../../src/Search";
 import { O2xpProvider } from "../../src/O2xpContext";
 import createProps from "../mockProps";
 import mockStore from "../../static/mockStore";
@@ -22,17 +22,17 @@ const useO2xpProviderMock = () => contextMock;
 
 jest.mock("../../src/hooks/useO2xpProvider", () => useO2xpProviderMock);
 
-describe("SearchSystem", () => {
+describe("Search", () => {
   let wrapper = mount(
     <O2xpProvider {...props}>
-      <SearchSystem />
+      <Search />
     </O2xpProvider>
   );
 
   beforeEach(() => {
     wrapper = mount(
       <O2xpProvider {...props}>
-        <SearchSystem />
+        <Search />
       </O2xpProvider>
     );
   });
@@ -44,7 +44,7 @@ describe("SearchSystem", () => {
   const searchIcon = wrapper.find(".o2xp-search-icon").first();
 
   it("should mount", () => {
-    expect(wrapper.find(SearchSystem)).toHaveLength(1);
+    expect(wrapper.find(Search)).toHaveLength(1);
   });
 
   it("should handleClick", () => {
@@ -197,6 +197,6 @@ describe("SearchSystem", () => {
         .find("#o2xp-search-bar")
         .first()
         .props().error
-    ).toBeTruthy;
+    ).toBeTruthy();
   });
 });
