@@ -1,10 +1,13 @@
+// @flow
 import React from "react";
 import Datatable from "@o2xp/react-datatable";
+import Search from "../../src/Search";
 import Print from "../../src/Print";
+import DisplayColumns from "../../src/DisplayColumns";
 import { O2xpProvider } from "../../src/O2xpContext/O2xpContext";
 import { columnsData, rows } from "../../static/data";
 
-const DefaultStory = () => {
+const DefaultStory = (): React$Element<*> => {
   const [rowsData, setRowsData] = React.useState(rows);
   const [columns, setColumns] = React.useState(columnsData);
 
@@ -24,7 +27,9 @@ const DefaultStory = () => {
         setColumns={handleOnColumnsChange}
       >
         <Datatable rowsData={rowsData} columnsData={columns} />
+        <Search />
         <Print />
+        <DisplayColumns />
       </O2xpProvider>
     </>
   );
