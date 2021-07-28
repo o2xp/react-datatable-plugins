@@ -55,10 +55,13 @@ describe("Search", () => {
   });
 
   it("should swap query mode", () => {
-    searchIcon.simulate("click");
+    act(() => {
+      searchIcon.props().onClick();
+    });
+    wrapper.update();
     const formControlLabel = wrapper.find(FormControlLabel).first();
 
-    expect(formControlLabel.props().className).toEqual("o2xp-search-mode-show");
+    expect(formControlLabel.props().className).toEqual("o2xp-search-mode-hidden");
     expect(wrapper.exists("#o2xp-search-bar")).toBeTruthy();
 
     act(() => {
@@ -77,7 +80,7 @@ describe("Search", () => {
       searchIcon.simulate("click");
       const formControlLabel = wrapper.find(FormControlLabel).first();
 
-      expect(formControlLabel.props().className).toEqual("o2xp-search-mode-show");
+      expect(formControlLabel.props().className).toEqual("o2xp-search-mode-hidden");
       expect(wrapper.exists("#o2xp-search-bar")).toBeTruthy();
 
       act(() => {
@@ -123,7 +126,7 @@ describe("Search", () => {
       searchIcon.simulate("click");
       const formControlLabel = wrapper.find(FormControlLabel).first();
 
-      expect(formControlLabel.props().className).toEqual("o2xp-search-mode-show");
+      expect(formControlLabel.props().className).toEqual("o2xp-search-mode-hidden");
       expect(wrapper.exists("#o2xp-search-bar")).toBeTruthy();
 
       act(() => {
@@ -170,7 +173,7 @@ describe("Search", () => {
     searchIcon.simulate("click");
     const formControlLabel = wrapper.find(FormControlLabel).first();
 
-    expect(formControlLabel.props().className).toEqual("o2xp-search-mode-show");
+    expect(formControlLabel.props().className).toEqual("o2xp-search-mode-hidden");
     expect(wrapper.exists("#o2xp-search-bar")).toBeTruthy();
 
     act(() => {

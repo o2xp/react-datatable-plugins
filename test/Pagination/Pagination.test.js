@@ -8,7 +8,6 @@ import Pagination from "../../src/Pagination";
 import { O2xpProvider } from "../../src/O2xpContext";
 import createProps from "../mockProps";
 
-const handleNavMock = jest.fn();
 const setRowsDataMock = jest.fn();
 const setColumnsMock = jest.fn();
 const props = createProps({ setRowsDataMock, setColumnsMock });
@@ -110,7 +109,5 @@ describe("Pagination", () => {
         .at(0)
         .props().value
     ).toEqual(2);
-
-    expect(handleNavMock).toHaveBeenCalledTimes(2);
   });
 });
