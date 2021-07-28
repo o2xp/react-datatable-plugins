@@ -1,5 +1,21 @@
+#o2xp-download-link{
+  text-decoration: none;
+  color: #fff;
+}
 
+.o2xp-file-infos{
+  display: flex;
+}
 
+#o2xp-radio-csv{
+  position: absolute;
+  margin-left: 20px;
+}
+
+#o2xp-radio-json{
+  position: absolute;
+  margin-left: 100px;
+}
 .o2xp-search-wrapper{
     display: inline-flex;
     float: right;
