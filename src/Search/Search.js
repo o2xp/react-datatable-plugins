@@ -5,7 +5,7 @@ import Button from "./Button";
 import "../style.css";
 
 const Search = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [color, setColor] = useState("primary");
 
   const handleClickOpen = () => {

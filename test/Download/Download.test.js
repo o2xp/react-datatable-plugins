@@ -1,6 +1,7 @@
 import "jsdom-global/register";
 import React from "react";
 import { mount } from "enzyme";
+import { act } from "react-dom/test-utils";
 import Download from "../../src/Download";
 import Button from "../../src/Download/Button";
 import Export from "../../src/Download/Export";
@@ -35,7 +36,13 @@ describe("Download", () => {
   });
 
   it("should open dialog", () => {
-    wrapper.find(Button).simulate("click");
+    act(() => {
+      wrapper
+        .find(Button)
+        .props()
+        .open();
+    });
+    wrapper.update();
 
     expect(wrapper.find(Export).props().showDialog).toBeTruthy();
   });

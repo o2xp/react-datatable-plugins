@@ -1,8 +1,6 @@
 // @flow
 
 import React, { useState } from "react";
-import IconButton from "@material-ui/core/IconButton";
-import PrintIcon from "@material-ui/icons/Print";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";

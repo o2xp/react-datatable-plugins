@@ -5,7 +5,7 @@ import {
   evaluateQuery,
   transformString,
   managePrioritiesQueries
-} from "../../src/Search/SearchSystem/searchTools";
+} from "../../src/Search/Input/tools";
 
 describe("SearchSystem", () => {
   describe("managePrioritiesQueries should", () => {
